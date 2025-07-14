@@ -7,12 +7,16 @@ class App extends Component {
     this.state = { apiResponse: "" };
   }
 
-  callAPI() {
-    fetch(process.env.REACT_APP_APIURL)
-      .then((res) => res.text())
-      .then((res) => this.setState({ apiResponse: res }))
-      .catch((err) => this.setState({ apiResponse: "Error fetching API" }));
-  }
+callAPI() {
+  fetch(process.env.REACT_APP_APIURL)
+    .then((res) => res.json())
+    .then((data) =>
+      this.setState({ apiResponse: `${data.status} — ${data.datetime}` })
+    )
+    .catch((err) =>
+      this.setState({ apiResponse: "Error fetching API" })
+    );
+}
 
   componentDidMount() {
     this.callAPI();
